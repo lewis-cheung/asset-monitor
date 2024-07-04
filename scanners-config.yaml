@@ -55,6 +55,8 @@ assetIdByCodeByChain:
   juno:
     JUNO: __NATIVE__
     # GLTO: juno1j0a9ymgngasfn3l5me8qpd53l5zlm9wurfdk7r65s5mg6tkxal3qpgf5se
+  matic:
+    MATIC: __NATIVE__
   multiversx:
     EGLD: __NATIVE__
   osmosis:
@@ -157,6 +159,11 @@ assetScanners:
     chain: juno
     params:
       endpoint: https://juno-rpc.polkachu.com
+  # Matic
+  - type: ethereum-native
+    chain: matic
+    params:
+      endpoint: https://polygon-rpc.com
   # Multiversx
   - type: multiversx-native
     chain: multiversx
