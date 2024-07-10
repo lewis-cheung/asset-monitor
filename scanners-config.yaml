@@ -59,6 +59,8 @@ assetIdByCodeByChain:
     MATIC: __NATIVE__
   multiversx:
     EGLD: __NATIVE__
+  near:
+    NEAR: __NATIVE__
   osmosis:
     OSMO: __NATIVE__
   quicksilver:
