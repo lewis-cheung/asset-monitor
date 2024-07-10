@@ -24,6 +24,7 @@ export namespace AssetScannerType {
     const ETHEREUM_NATIVE: string;
     const ETHEREUM_SECONDARY: string;
     const MULTIVERSX_NATIVE: string;
+    const NEAR_NATIVE: string;
     const RIPPLE_NATIVE: string;
     const SOLANA_NATIVE: string;
     const SOLANA_SECONDARY: string;

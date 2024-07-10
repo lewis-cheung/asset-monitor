@@ -59,6 +59,8 @@ assetIdByCodeByChain:
     MATIC: __NATIVE__
   multiversx:
     EGLD: __NATIVE__
+  near:
+    NEAR: __NATIVE__
   osmosis:
     OSMO: __NATIVE__
   quicksilver:
@@ -169,6 +171,11 @@ assetScanners:
     chain: multiversx
     params:
       endpoint: https://api.multiversx.com
+  # Near
+  - type: near-native
+    chain: near
+    params:
+      endpoint: https://rpc.mainnet.near.org
   # Osmosis
   - type: cosmos-native
     chain: osmosis

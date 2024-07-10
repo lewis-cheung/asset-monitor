@@ -39,7 +39,7 @@ export function getTotalInvestedValue(opts?: {
  * @param {number} [opts.daysAgo] if not provided, will return the latest total value
  * @returns {Promise<Decimal>}
  */
-export function getLatestTotalValue(opts?: {
+export function getTotalValue(opts?: {
     trx?: Transaction;
     daysAgo?: number;
 }): Promise<Decimal>;
