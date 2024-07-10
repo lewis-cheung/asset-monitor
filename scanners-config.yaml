@@ -169,6 +169,11 @@ assetScanners:
     chain: multiversx
     params:
       endpoint: https://api.multiversx.com
+  # Near
+  - type: near-native
+    chain: near
+    params:
+      endpoint: https://rpc.mainnet.near.org
   # Osmosis
   - type: cosmos-native
     chain: osmosis
