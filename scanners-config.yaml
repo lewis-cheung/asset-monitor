@@ -131,7 +131,6 @@ assetScanners:
   - type: cosmos-native
     chain: cosmos-hub
     params:
-      assetCode: ATOM
       endpoint: https://cosmos-rpc.polkachu.com
   # Dymension
   # - type: cosmos-native
