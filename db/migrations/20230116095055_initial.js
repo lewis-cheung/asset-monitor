@@ -1,5 +1,4 @@
 import { Model } from 'objection'
-import { AssetSnapshot, AssetSnapshotBatch, AssetSnapshotTag, AssetGroup, AssetFlow } from '../../lib/index.js'
 
 /**
  * @param {import('knex').Knex} knex
@@ -8,19 +7,19 @@ import { AssetSnapshot, AssetSnapshotBatch, AssetSnapshotTag, AssetGroup, AssetF
 export async function up(knex) {
 	Model.knex(knex)
 
-	await knex.schema.createTable(AssetGroup.tableName, t => {
+	await knex.schema.createTable('asset_groups', t => {
 		t.increments('id').primary()
 		t.string('name', 255).notNullable().unique()
 		t.timestamp('created_at').notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP'))
 	})
 
-	await knex.schema.createTable(AssetSnapshotBatch.tableName, t => {
+	await knex.schema.createTable('asset_snapshot_batches', t => {
 		t.increments('id').primary()
 		t.timestamp('scan_started_at').notNullable()
 		t.timestamp('scan_finished_at').notNullable().index()
 	})
 
-	await knex.schema.createTable(AssetSnapshot.tableName, t => {
+	await knex.schema.createTable('asset_snapshots', t => {
 		t.increments('id').primary()
 		t.integer('batch_id').notNullable().unsigned().index()
 		t.integer('group_id').nullable().unsigned().index()
@@ -37,14 +36,14 @@ export async function up(knex) {
 
 		t.foreign('batch_id')
 			.references('id')
-			.inTable(AssetSnapshotBatch.tableName)
+			.inTable('asset_snapshot_batches')
 			.onDelete('CASCADE')
 		t.foreign('group_id')
 			.references('id')
-			.inTable(AssetGroup.tableName)
+			.inTable('asset_groups')
 	})
 
-	await knex.schema.createTable(AssetSnapshotTag.tableName, t => {
+	await knex.schema.createTable('asset_snapshot_tags', t => {
 		t.increments('id').primary()
 		t.integer('snapshot_id').notNullable().unsigned().index()
 		t.string('category', 255).notNullable().index()
@@ -53,11 +52,11 @@ export async function up(knex) {
 		t.unique(['snapshot_id', 'category'])
 		t.foreign('snapshot_id')
 			.references('id')
-			.inTable(AssetSnapshot.tableName)
+			.inTable('asset_snapshots')
 			.onDelete('CASCADE')
 	})
 
-	await knex.schema.createTable(AssetFlow.tableName, t => {
+	await knex.schema.createTable('asset_flows', t => {
 		t.increments('id').primary()
 		t.integer('from_group_id').nullable().unsigned().index()
 		t.integer('to_group_id').nullable().unsigned().index()
@@ -66,10 +65,10 @@ export async function up(knex) {
 
 		t.foreign('from_group_id')
 			.references('id')
-			.inTable(AssetGroup.tableName)
+			.inTable('asset_groups')
 		t.foreign('to_group_id')
 			.references('id')
-			.inTable(AssetGroup.tableName)
+			.inTable('asset_groups')
 	})
 }
 
@@ -79,9 +78,9 @@ export async function up(knex) {
  */
 export async function down(knex) {
 	Model.knex(knex)
-	await knex.schema.dropTableIfExists(AssetSnapshotTag.tableName)
-	await knex.schema.dropTableIfExists(AssetSnapshot.tableName)
-	await knex.schema.dropTableIfExists(AssetSnapshotBatch.tableName)
-	await knex.schema.dropTableIfExists(AssetFlow.tableName)
-	await knex.schema.dropTableIfExists(AssetGroup.tableName)
+	await knex.schema.dropTableIfExists('asset_snapshot_tags')
+	await knex.schema.dropTableIfExists('asset_snapshots')
+	await knex.schema.dropTableIfExists('asset_snapshot_batches')
+	await knex.schema.dropTableIfExists('asset_flows')
+	await knex.schema.dropTableIfExists('asset_groups')
 }

@@ -1,5 +1,4 @@
 import { Model } from 'objection'
-import { User } from '../../lib/models/index.js'
 import * as enums from '../../lib/enums.js'
 import { getOnUpdateTriggerSql } from '../../lib/index.js'
 
@@ -20,7 +19,7 @@ export async function up(knex) {
 		$$ language 'plpgsql';
 	`)
 
-	await knex.schema.createTable(User.tableName, t => {
+	await knex.schema.createTable('users', t => {
 		t.increments('id')
 		t.string('name', 255).notNullable().unique()
 		t.string('hashed_password', 128).notNullable()
@@ -30,7 +29,7 @@ export async function up(knex) {
 		t.timestamp('last_login_at').notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP'))
 	})
 
-	await knex.raw(getOnUpdateTriggerSql(User.tableName))
+	await knex.raw(getOnUpdateTriggerSql('users'))
 }
 
 /**
@@ -40,6 +39,6 @@ export async function up(knex) {
 export async function down(knex) {
 	Model.knex(knex)
 
-	await knex.schema.dropTableIfExists(User.tableName)
+	await knex.schema.dropTableIfExists('users')
 	await knex.raw(`DROP FUNCTION on_update_timestamp`)
 }
