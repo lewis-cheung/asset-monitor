@@ -29,6 +29,8 @@ export async function up(knex) {
 		t.string('code', 255).notNullable().index()
 		t.enum('type', ['cex-token', 'native-token', 'secondary-token', 'nft', 'others']).notNullable()
 		t.string('address', 255)
+		t.boolean('is_enabled').notNullable().defaultTo(true)
+		t.string('remarks', 255)
 		t.timestamp('created_at').notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP'))
 		t.timestamp('updated_at').notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP'))
 
