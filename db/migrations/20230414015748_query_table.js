@@ -61,7 +61,6 @@ export async function up(knex) {
 export async function down(knex) {
 	Model.knex(knex)
 
-	await knex.schema.dropTable('asset_queries')
 	await knex.schema.alterTable('asset_groups', t => {
 		t.dropColumn('is_default')
 	})
@@ -82,4 +81,5 @@ export async function down(knex) {
 			.references('id')
 			.inTable('asset_snapshots')
 	})
+	await knex.schema.dropTable('asset_queries')
 }
