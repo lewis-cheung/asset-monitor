@@ -1,18 +1,13 @@
 export default class BaseAssetScanner extends BaseService {
     /** @protected @type {string[]} */ protected static requiredQueryKeys: string[];
-    /** @protected @type {string} */ protected static nativeTokenAssetId: string;
     /**
      * @param {PriceAggregator} priceAggregator
-     * @param {types.Chain} chain
-     * @param {BiMap} [assetInfoMap]
-     * @param {ServiceParamDict} [paramDict]
-     * @param {RateLimiterOpts} [rateLimitOpts={}]
+     * @param {AssetScannerConfig} config
      */
-    constructor(priceAggregator: PriceAggregator, chain: types.Chain, assetInfoMap?: BiMap<any, any>, paramDict?: ServiceParamDict, rateLimitOpts?: RateLimiterOpts);
-    /** @type {types.Chain} */ chain: types.Chain;
-    /** @protected @type {BiMap<types.AssetCode, string>} */ protected assetIdByCode: BiMap<types.AssetCode, string>;
+    constructor(priceAggregator: PriceAggregator, config: AssetScannerConfig);
+    /** @type {enums.Chain} */ chain: enums.Chain;
     /** @protected @type {PriceAggregator} */ protected priceAggregator: PriceAggregator;
-    get nativeTokenCode(): string;
+    /** @protected @type {AssetScannerConfig} */ protected config: AssetScannerConfig;
     /**
      * @public
      * @param {AssetQuery} query
@@ -30,8 +25,8 @@ export default class BaseAssetScanner extends BaseService {
 export type RateLimiterOpts = import('rate-limiter').RateLimiterOpts;
 export type ServiceParamDict = import('../utils').ServiceParamDict;
 import { BaseService } from "../utils/index.js";
-import * as types from "../types.js";
-import { BiMap } from "mnemonist";
+import * as enums from "../enums.js";
 import PriceAggregator from "../price-aggregator.js";
+import { AssetScannerConfig } from "../models/index.js";
 import { AssetQuery } from "../models/index.js";
 import { AssetSnapshot } from "../models/index.js";

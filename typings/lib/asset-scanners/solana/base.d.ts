@@ -3,6 +3,8 @@ export const TOKEN_PROGRAM_ID: solanaWeb3.PublicKey;
 export default class BaseSolanaAssetScanner extends BaseAssetScanner {
     /** @type {solanaWeb3.Connection} */ connection: solanaWeb3.Connection;
     /** @type {Map<string, number>} */ decimalsByAddr: Map<string, number>;
+    /** @protected @type {Map.<string, splTokenRegistry.TokenInfo>} */ protected tokenRegistryByAddr: Map<string, splTokenRegistry.TokenInfo>;
+    allTokenList: splTokenRegistry.TokenInfo[];
     /**
      * @protected
      * @param {solanaWeb3.Context} context
@@ -20,3 +22,4 @@ export default class BaseSolanaAssetScanner extends BaseAssetScanner {
 }
 import * as solanaWeb3 from "@solana/web3.js";
 import BaseAssetScanner from "../base.js";
+import * as splTokenRegistry from "@solana/spl-token-registry";

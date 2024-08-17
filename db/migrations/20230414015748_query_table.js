@@ -1,6 +1,5 @@
 import { Model } from 'objection'
 import { createOnUpdateTriggerSql } from '../helpers.js'
-import { AssetQuery, AssetGroup, AssetSnapshot } from '../../lib/models/index.js'
 
 /**
  * @param {import('knex').Knex} knex
@@ -10,7 +9,7 @@ export async function up(knex) {
 	Model.knex(knex)
 
 	// create asset query table
-	await knex.schema.createTable(AssetQuery.tableName, t => {
+	await knex.schema.createTable('asset_queries', t => {
 		t.increments('id')
 		t.string('scanner_type', 255).notNullable()
 		t.string('chain', 255).notNullable()
@@ -24,24 +23,24 @@ export async function up(knex) {
 
 		t.foreign('group_id')
 			.references('id')
-			.inTable(AssetGroup.tableName)
+			.inTable('asset_groups')
 	})
-	await knex.raw(createOnUpdateTriggerSql(AssetQuery.tableName))
+	await knex.raw(createOnUpdateTriggerSql('asset_queries'))
 
 	// add is_default column to asset group table and set default group to default
-	await knex.schema.alterTable(AssetGroup.tableName, t => {
+	await knex.schema.alterTable('asset_groups', t => {
 		t.boolean('is_default').defaultTo(false).notNullable()
 	})
-	await knex(AssetGroup.tableName).update({ is_default: true }).where({ name: 'default' })
+	await knex('asset_groups').update({ is_default: true }).where({ name: 'default' })
 
 	// add tag_map and query_id column to asset snapshot table, migrate data from asset snapshot tag table and drop asset snapshot tag table
-	await knex.schema.alterTable(AssetSnapshot.tableName, t => {
+	await knex.schema.alterTable('asset_snapshots', t => {
 		t.jsonb('tag_map').defaultTo('{}').notNullable()
 		t.integer('query_id').unsigned()
 		t.timestamp('captured_at').notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP')).alter()
 		t.foreign('query_id')
 			.references('id')
-			.inTable(AssetQuery.tableName)
+			.inTable('asset_queries')
 			.onDelete('SET NULL')
 	})
 	await knex.raw(`
@@ -62,12 +61,11 @@ export async function up(knex) {
 export async function down(knex) {
 	Model.knex(knex)
 
-	await knex.schema.dropTable(AssetQuery.tableName)
-	await knex.schema.alterTable(AssetGroup.tableName, t => {
+	await knex.schema.alterTable('asset_groups', t => {
 		t.dropColumn('is_default')
 	})
 
-	await knex.schema.alterTable(AssetSnapshot.tableName, t => {
+	await knex.schema.alterTable('asset_snapshots', t => {
 		t.dropForeign('query_id')
 		t.dropColumns(['tag_map', 'query_id'])
 		t.timestamp('captured_at').notNullable().alter()
@@ -81,6 +79,7 @@ export async function down(knex) {
 
 		t.foreign('snapshot_id')
 			.references('id')
-			.inTable(AssetSnapshot.tableName)
+			.inTable('asset_snapshots')
 	})
+	await knex.schema.dropTable('asset_queries')
 }

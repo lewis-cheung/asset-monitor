@@ -4,7 +4,6 @@ export default class AssetMonitor {
      */
     constructor(opts?: AssetMonitorOpts);
     /** @type {Map<string, Map<string, BaseAssetScanner>>} */ assetScannerByChainByType: Map<string, Map<string, BaseAssetScanner>>;
-    /** @protected @type {Map<string, BiMap<string, types.AssetCode>>} */ protected assetIdByCodeByChain: Map<string, BiMap<string, types.AssetCode>>;
     /** @protected @type {PriceAggregator} */ protected priceAggregator: PriceAggregator;
     /** @protected @type {AssetMonitorTelegramBot} */ protected telegramBot: AssetMonitorTelegramBot;
     /** @protected @type {number[]} */ protected telegramNotiChatIds: number[];
@@ -21,13 +20,14 @@ export default class AssetMonitor {
     sendTelegramNoti(content: string | string[]): Promise<void>;
     /**
      * @public
-     * @param {object} [opts={}]
-     * @param {number[]} [opts.groupIds=[]]
      * @returns {Promise<types.ScanResult>}
      */
-    public scan(opts?: {
-        groupIds?: number[];
-    }): Promise<types.ScanResult>;
+    public scan(): Promise<types.ScanResult>;
+    /**
+     * @private
+     * @return {Promise<Map<string, AssetScannerConfig[]>>}
+     */
+    private getAssetScannerConfigsMap;
     /**
      * @public
      * @param {types.AssetGroupSpecifier} fromGroupSpecifier
@@ -55,10 +55,11 @@ export default class AssetMonitor {
      */
     public close(): Promise<void>;
     /**
-     * @public
-     * @param {types.AssetScannerConfig} config
+     * @private
+     * @param {AssetScannerConfig} config
+     * @returns {Promise<BaseAssetScanner>}
      */
-    public addAssetScanner(config: types.AssetScannerConfig): void;
+    private createAssetScanner;
     /**
      * @public
      * @param {types.PriceScannerConfig} config
@@ -76,9 +77,8 @@ export type AssetMonitorOpts = {
     secretsPath?: string;
 };
 import { BaseAssetScanner } from "./asset-scanners/index.js";
-import { BiMap } from "mnemonist";
-import * as types from "./types.js";
 import PriceAggregator from "./price-aggregator.js";
 import AssetMonitorTelegramBot from "./telegram-bot.js";
+import * as types from "./types.js";
 import Decimal from "decimal.js";
 import { AssetFlow } from "./models/index.js";

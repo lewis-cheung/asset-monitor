@@ -2,6 +2,7 @@ export default class CosmosNativeTokenScanner extends BaseCosmosAssetScanner {
     /** @type {string} */ denom: string;
     /** @type {number} */ decimals: number;
     /** @protected @type {CustomizedQueryClient} */ protected queryClient: CustomizedQueryClient;
+    /** @protected @type {AssetInfo} */ protected nativeAssetInfo: AssetInfo;
     /**
      * Since the registry's assetList includes coingecko id, we can use the native asset code to find the coingecko id from CoinGeckoPriceScanner, than use the coingecko id to search for the denom in AssetList.
      * @param {typeof assetLists[0]} assetList
@@ -20,6 +21,7 @@ export default class CosmosNativeTokenScanner extends BaseCosmosAssetScanner {
 export type DistributionExtension = import('@cosmjs/stargate').DistributionExtension;
 export type CustomizedQueryClient = QueryClient & DistributionExtension;
 import BaseCosmosAssetScanner from "./base.js";
+import { AssetInfo } from "../../models/index.js";
 import { assets as assetLists } from "chain-registry";
 import * as types from "../../types.js";
 import { QueryClient } from "@cosmjs/stargate";

@@ -3,8 +3,12 @@ export default class BaseModel extends Model {
     static AssetFlow: typeof import('./asset-flow').default;
     /** @type {typeof import('./asset-group').default} */
     static AssetGroup: typeof import('./asset-group').default;
+    /** @type {typeof import('./asset-info').default} */
+    static AssetInfo: typeof import('./asset-info').default;
     /** @type {typeof import('./asset-query').default} */
     static AssetQuery: typeof import('./asset-query').default;
+    /** @type {typeof import('./asset-scanner-config').default} */
+    static AssetScannerConfig: typeof import('./asset-scanner-config').default;
     /** @type {typeof import('./asset-snapshot').default} */
     static AssetSnapshot: typeof import('./asset-snapshot').default;
     /** @type {typeof import('./asset-snapshot-batch').default} */
