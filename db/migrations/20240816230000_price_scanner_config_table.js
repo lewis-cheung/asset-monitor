@@ -9,9 +9,8 @@ import { getOnUpdateTriggerSql } from '../../lib/index.js'
 export async function up(knex) {
 	Model.knex(knex)
 
-	await knex.schema.createTable('asset_scanner_configs', t => {
+	await knex.schema.createTable('price_scanner_configs', t => {
 		t.increments('id').primary()
-		t.string('chain', 255).notNullable()
 		t.string('type', 255).notNullable()
 		t.string('endpoint', 255)
 		t.string('api_key', 255)
@@ -22,18 +21,17 @@ export async function up(knex) {
 	})
 	knex.raw(getOnUpdateTriggerSql('asset_scanner_configs'))
 
-	await knex.schema.createTable('asset_infos', t => {
+	await knex.schema.createTable('price_scanner_config_assets', t => {
 		t.increments('id').primary()
-		t.string('chain', 255).notNullable()
-		t.string('code', 255).notNullable().index()
-		t.enum('type', ['cex-token', 'native-token', 'secondary-token', 'nft', 'others']).notNullable()
-		t.string('address', 255)
+		t.integer('price_scanner_type').notNullable()
+		t.integer('asset_info_id').unsigned().notNullable().references('id').inTable('asset_infos').onDelete('CASCADE')
+		t.string('scanner_specific_code', 255).notNullable()
 		t.boolean('is_enabled').notNullable().defaultTo(true)
 		t.string('remarks', 255)
 		t.timestamp('created_at').notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP'))
 		t.timestamp('updated_at').notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP'))
 
-		t.unique(['chain', 'code'])
+		t.unique(['price_scanner_config_id', 'asset_info_id'])
 	})
 	knex.raw(getOnUpdateTriggerSql('asset_infos'))
 }
@@ -45,6 +43,6 @@ export async function up(knex) {
 export async function down(knex) {
 	Model.knex(knex)
 
-	await knex.schema.dropTableIfExists('asset_infos')
-	await knex.schema.dropTableIfExists('asset_scanner_configs')
+	await knex.schema.dropTableIfExists('price_scanner_config_assets')
+	await knex.schema.dropTableIfExists('price_scanner_configs')
 }
