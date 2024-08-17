@@ -1,20 +1,10 @@
 declare const _default: {};
 export default _default;
 export type AssetCode = string;
-export type Chain = string;
 /**
  * Can either be group name (string), group id (number), or undefined to specify outside source.
  */
 export type AssetGroupSpecifier = string | number | undefined;
-export type AssetScannerConfig = {
-    /**
-     * If this is omitted, the name will be <type>@<chain>
-     */
-    name?: string;
-    type: enums.AssetScannerType;
-    chain: types.Chain;
-    params: object;
-};
 export type PriceScannerConfig = {
     type: enums.PriceScannerType;
     params?: object;
@@ -30,7 +20,7 @@ export type ScannersConfig = {
             [x: string]: string;
         };
     };
-    assetScanners: AssetScannerConfig[];
+    assetScanners: import('./models/index.js').AssetScannerConfig[];
     priceScanners: PriceScannerConfig[];
 };
 export type ScanResult = {

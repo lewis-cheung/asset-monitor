@@ -30,6 +30,33 @@ export namespace AssetScannerType {
     const SOLANA_SECONDARY: string;
     const ORCA_WHIRLPOOL: string;
 }
+export type Chain = string;
+export namespace Chain {
+    const ALGORAND: string;
+    const APTOS: string;
+    const AVALANCHE_C: string;
+    const BITCOIN: string;
+    const BYBIT: string;
+    const CARDANO: string;
+    const COMDEX: string;
+    const COSMOS_HUB: string;
+    const DYMENSION: string;
+    const ETHEREUM: string;
+    const EVMOS: string;
+    const JUNO: string;
+    const MATIC: string;
+    const MULTIVERSX: string;
+    const NEAR: string;
+    const OSMOSIS: string;
+    const QUICKSILVER: string;
+    const REBUS: string;
+    const RIPPLE: string;
+    const SECRET_NETWORK: string;
+    const SIFCHAIN: string;
+    const SOLANA: string;
+    const STARGAZE: string;
+    const STRIDE: string;
+}
 export type DefaultAssetTagCategory = string;
 export namespace DefaultAssetTagCategory {
     const DAPP: string;
