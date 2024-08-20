@@ -23,7 +23,7 @@ export async function up(knex) {
 
 	await knex.schema.createTable('price_scanner_asset_infos', t => {
 		t.increments('id').primary()
-		t.integer('price_scanner_type').notNullable()
+		t.string('price_scanner_type', 255).notNullable()
 		t.string('asset_code', 255).notNullable()
 		t.string('scanner_specific_code', 255).notNullable()
 		t.boolean('is_enabled').notNullable().defaultTo(true)
