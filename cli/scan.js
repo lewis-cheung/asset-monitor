@@ -13,6 +13,7 @@ cmd
 	.option('-C, --secrets <path>', 'path to the secrets file')
 	.action(async ({ save, listAll, scannerConfig, secrets }) => {
 		const assetMonitor = new lib.AssetMonitor({ scannerConfigPath: scannerConfig, secretsPath: secrets })
+		await assetMonitor.init()
 		const scanResult = await assetMonitor.scan()
 		if (listAll) {
 			scanResult.snapshots.forEach(result => logger.info(JSON.stringify(result, undefined, 2)))
