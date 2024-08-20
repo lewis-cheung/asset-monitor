@@ -15,6 +15,8 @@ export async function seed(knex) {
 		{
 			type: PriceScannerType.LIVE_COIN_WATCH,
 			is_enabled: false,
+			endpoint: 'https://api.livecoinwatch.com',
+			api_key: 'dummy',
 		},
 	])
 
