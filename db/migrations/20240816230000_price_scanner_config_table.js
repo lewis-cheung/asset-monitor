@@ -21,17 +21,17 @@ export async function up(knex) {
 	})
 	knex.raw(getOnUpdateTriggerSql('asset_scanner_configs'))
 
-	await knex.schema.createTable('price_scanner_config_assets', t => {
+	await knex.schema.createTable('price_scanner_asset_infos', t => {
 		t.increments('id').primary()
 		t.integer('price_scanner_type').notNullable()
-		t.integer('asset_info_id').unsigned().notNullable().references('id').inTable('asset_infos').onDelete('CASCADE')
+		t.string('asset_code', 255).notNullable()
 		t.string('scanner_specific_code', 255).notNullable()
 		t.boolean('is_enabled').notNullable().defaultTo(true)
 		t.string('remarks', 255)
 		t.timestamp('created_at').notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP'))
 		t.timestamp('updated_at').notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP'))
 
-		t.unique(['price_scanner_config_id', 'asset_info_id'])
+		t.unique(['price_scanner_type', 'asset_code'])
 	})
 	knex.raw(getOnUpdateTriggerSql('asset_infos'))
 }
@@ -43,6 +43,6 @@ export async function up(knex) {
 export async function down(knex) {
 	Model.knex(knex)
 
-	await knex.schema.dropTableIfExists('price_scanner_config_assets')
+	await knex.schema.dropTableIfExists('price_scanner_asset_infos')
 	await knex.schema.dropTableIfExists('price_scanner_configs')
 }
