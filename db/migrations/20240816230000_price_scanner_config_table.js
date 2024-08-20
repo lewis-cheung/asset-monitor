@@ -32,6 +32,7 @@ export async function up(knex) {
 		t.timestamp('updated_at').notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP'))
 
 		t.unique(['price_scanner_type', 'asset_code'])
+		t.unique(['price_scanner_type', 'scanner_specific_code'])
 	})
 	knex.raw(getOnUpdateTriggerSql('asset_infos'))
 }
