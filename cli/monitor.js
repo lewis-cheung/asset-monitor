@@ -8,11 +8,9 @@ const logger = lib.utils.createLogger('CLI')
 cmd
 	.description('Scan assets and store the snapshots periodically.')
 	.argument('[cron]', 'cron schedule. Default as \'0 * * * *\'')
-	.option('-S, --scanner-config <path>', 'path to the scanner config file')
-	.option('-Q, --query-config <path>', 'path to the query config file')
-	.option('-C, --secrets <path>', 'path to the secrets file')
-	.action(async (cron, { queryConfig, scannerConfig, secrets }) => {
-		const assetMonitor = new lib.AssetMonitor({ queryConfigPath: queryConfig, scannerConfigPath: scannerConfig, secretsPath: secrets })
+	.option('-e, --env <path>', 'path to the env file')
+	.action(async (cron, { env }) => {
+		const assetMonitor = new lib.AssetMonitor({ envPath: env })
 		await assetMonitor.init()
 		assetMonitor.monitor(cron)
 	})

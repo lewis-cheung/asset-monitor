@@ -9,10 +9,9 @@ cmd
 	.description('Scan assets from all sources.')
 	.option('-s, --save', 'save results to database', false)
 	.option('-l, --list-all', 'list all query results in the terminal', false)
-	.option('-S, --scanner-config <path>', 'path to the scanner config file')
-	.option('-C, --secrets <path>', 'path to the secrets file')
-	.action(async ({ save, listAll, scannerConfig, secrets }) => {
-		const assetMonitor = new lib.AssetMonitor({ scannerConfigPath: scannerConfig, secretsPath: secrets })
+	.option('-e, --env <path>', 'path to the env file')
+	.action(async ({ save, listAll, env }) => {
+		const assetMonitor = new lib.AssetMonitor({ scannerConfigPath: scannerConfig, envPath: env })
 		await assetMonitor.init()
 		const scanResult = await assetMonitor.scan()
 		if (listAll) {

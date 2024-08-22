@@ -1,11 +1,9 @@
 # npm
 /node_modules
 
-# configs and secrets
-/query-config*.yaml
-!/query-config.template.yaml
-/secrets*.yaml
-!/secrets.template.yaml
+# env
+/env*.yaml
+!/env.template.yaml
 
 # knex
 knexfile.js

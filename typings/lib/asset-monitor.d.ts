@@ -59,7 +59,7 @@ export default class AssetMonitor {
     private createAssetScanner;
 }
 export type AssetMonitorOpts = {
-    secretsPath?: string;
+    envPath?: string;
 };
 import PriceAggregator from "./price-aggregator.js";
 import AssetMonitorTelegramBot from "./telegram-bot.js";
