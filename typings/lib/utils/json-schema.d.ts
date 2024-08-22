@@ -8,7 +8,7 @@ export namespace schema {
     const chain: JSONSchema;
     const decimal: JSONSchema;
     const datetime: JSONSchema;
+    const priceScannerType: JSONSchema;
     const refId: JSONSchema;
-    const userRole: JSONSchema;
 }
 export type JSONSchema = import('objection').JSONSchema;

@@ -6,4 +6,5 @@ export { default as AssetScannerConfig } from "./asset-scanner-config.js";
 export { default as AssetSnapshot } from "./asset-snapshot.js";
 export { default as AssetSnapshotBatch } from "./asset-snapshot-batch.js";
 export { default as AssetSnapshotTag } from "./asset-snapshot-tag.js";
-export { default as User } from "./user.js";
+export { default as PriceScannerAssetInfo } from "./price-scanner-asset-info.js";
+export { default as PriceScannerConfig } from "./price-scanner-config.js";

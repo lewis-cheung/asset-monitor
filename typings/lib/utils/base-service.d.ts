@@ -13,7 +13,6 @@ export default class BaseService {
     /** @protected @type {boolean} */ protected isInitialized: boolean;
     /** @protected @type {boolean} */ protected isClosed: boolean;
     /** @protected @type {Promise<void>} */ protected initPromise: Promise<void>;
-    /** @private @type {function} */ private initPromiseResolve;
     /**
      * @public
      */

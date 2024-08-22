@@ -1,11 +1,11 @@
 export default class BasePriceScanner extends BaseService {
     /**
-     * @param {ServiceParamDict} paramDict
-     * @param {object.<types.AssetCode, string>} assetIdByCode
+     * @param {PriceScannerConfig} config
      * @param {RateLimiterOpts} rateLimiterOpts
      */
-    constructor(paramDict?: ServiceParamDict, assetIdByCode?: object<types.AssetCode, string>, rateLimiterOpts?: RateLimiterOpts);
-    /** @protected @type {BiMap<types.AssetCode, string>} */ protected assetIdByCode: BiMap<types.AssetCode, string>;
+    constructor(config: PriceScannerConfig, rateLimiterOpts?: RateLimiterOpts);
+    /** @protected @type {PriceScannerConfig} */ protected config: PriceScannerConfig;
+    /** @protected @type {Map.<string, PriceScannerAssetInfo>} */ protected scannerAssetInfoByCode: Map<string, PriceScannerAssetInfo>;
     /**
      * @public
      * @param {types.AssetCode} code
@@ -21,6 +21,6 @@ export default class BasePriceScanner extends BaseService {
     protected _getPrice(code: types.AssetCode): Promise<number>;
 }
 export type RateLimiterOpts = import('rate-limiter').RateLimiterOpts;
-export type ServiceParamDict = import('../utils').ServiceParamDict;
 import { BaseService } from "../utils/index.js";
-import { BiMap } from "mnemonist";
+import { PriceScannerConfig } from "../models/index.js";
+import { PriceScannerAssetInfo } from "../models/index.js";

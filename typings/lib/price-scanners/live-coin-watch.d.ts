@@ -11,7 +11,7 @@ export default class LiveCoinWatchPriceScanner extends BasePriceScanner {
      * @param {string[]} coinIds
      * @returns {Promise<Map<types.AssetCode, number>>}
      */
-    protected getPrices(coinIds?: string[]): Promise<Map<types.AssetCode, number>>;
+    protected getPricesFromAPI(coinIds?: string[]): Promise<Map<types.AssetCode, number>>;
 }
 import BasePriceScanner from "./base.js";
 import { Cache } from "../utils/index.js";

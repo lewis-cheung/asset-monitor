@@ -3,17 +3,14 @@ export default class AssetMonitor {
      * @param {AssetMonitorOpts} [opts={}]
      */
     constructor(opts?: AssetMonitorOpts);
-    /** @type {Map<string, Map<string, BaseAssetScanner>>} */ assetScannerByChainByType: Map<string, Map<string, BaseAssetScanner>>;
     /** @protected @type {PriceAggregator} */ protected priceAggregator: PriceAggregator;
     /** @protected @type {AssetMonitorTelegramBot} */ protected telegramBot: AssetMonitorTelegramBot;
     /** @protected @type {number[]} */ protected telegramNotiChatIds: number[];
+    /** @protected @type {boolean} */ protected isInitialized: boolean;
     /**
-     * @protected
-     * @param {string} path
-     * @param {object} [secretObj]
-     * @returns {types.ScannersConfig | types.QueryConfig}
+     * @public
      */
-    protected loadConfig(path: string, secretObj?: object): types.ScannersConfig | types.QueryConfig;
+    public init(): Promise<void>;
     /**
      * @param {string|string[]} content
      */
@@ -60,23 +57,10 @@ export default class AssetMonitor {
      * @returns {Promise<BaseAssetScanner>}
      */
     private createAssetScanner;
-    /**
-     * @public
-     * @param {types.PriceScannerConfig} config
-     */
-    public addPriceScanner(config: types.PriceScannerConfig): void;
-    /**
-     * @protected
-     * @param {types.ScannersConfig} config
-     */
-    protected setupScanners(config: types.ScannersConfig): void;
 }
 export type AssetMonitorOpts = {
-    scannerConfigPath?: string;
-    queryConfigPath?: string;
     secretsPath?: string;
 };
-import { BaseAssetScanner } from "./asset-scanners/index.js";
 import PriceAggregator from "./price-aggregator.js";
 import AssetMonitorTelegramBot from "./telegram-bot.js";
 import * as types from "./types.js";
