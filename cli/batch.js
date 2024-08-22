@@ -3,7 +3,7 @@ import { Command } from 'commander'
 import * as lib from '../lib/index.js'
 
 const cmd = new Command('batch')
-const logger = lib.createLogger('CLI')
+const logger = lib.utils.createLogger('CLI')
 
 cmd
 	.description('Asset batch management.')
