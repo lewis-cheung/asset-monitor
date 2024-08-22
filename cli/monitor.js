@@ -13,6 +13,7 @@ cmd
 	.option('-C, --secrets <path>', 'path to the secrets file')
 	.action(async (cron, { queryConfig, scannerConfig, secrets }) => {
 		const assetMonitor = new lib.AssetMonitor({ queryConfigPath: queryConfig, scannerConfigPath: scannerConfig, secretsPath: secrets })
+		await assetMonitor.init()
 		assetMonitor.monitor(cron)
 	})
 
