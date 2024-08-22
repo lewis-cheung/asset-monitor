@@ -1,6 +1,6 @@
 import { Model } from 'objection'
 
-import { getOnUpdateTriggerSql } from '../../lib/index.js'
+import { createOnUpdateTriggerSql } from '../helpers.js'
 
 /**
  * @param {import('knex').Knex} knex
@@ -19,7 +19,7 @@ export async function up(knex) {
 		t.timestamp('created_at').notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP'))
 		t.timestamp('updated_at').notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP'))
 	})
-	knex.raw(getOnUpdateTriggerSql('asset_scanner_configs'))
+	knex.raw(createOnUpdateTriggerSql('asset_scanner_configs'))
 
 	await knex.schema.createTable('price_scanner_asset_infos', t => {
 		t.increments('id').primary()
@@ -34,7 +34,7 @@ export async function up(knex) {
 		t.unique(['price_scanner_type', 'asset_code'])
 		t.unique(['price_scanner_type', 'scanner_specific_code'])
 	})
-	knex.raw(getOnUpdateTriggerSql('asset_infos'))
+	knex.raw(createOnUpdateTriggerSql('asset_infos'))
 }
 
 /**

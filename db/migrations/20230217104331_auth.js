@@ -1,6 +1,6 @@
 import { Model } from 'objection'
 import * as enums from '../../lib/enums.js'
-import { getOnUpdateTriggerSql } from '../../lib/index.js'
+import { createOnUpdateTriggerSql } from '../helpers.js'
 
 /**
  * @param {import('knex').Knex} knex
@@ -29,7 +29,7 @@ export async function up(knex) {
 		t.timestamp('last_login_at').notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP'))
 	})
 
-	await knex.raw(getOnUpdateTriggerSql('users'))
+	await knex.raw(createOnUpdateTriggerSql('users'))
 }
 
 /**

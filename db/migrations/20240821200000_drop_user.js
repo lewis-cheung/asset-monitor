@@ -1,4 +1,4 @@
-import { getOnUpdateTriggerSql } from '../../lib/index.js'
+import { createOnUpdateTriggerSql } from '../helpers.js'
 
 /**
  * @param {import('knex').Knex} knex
@@ -23,5 +23,5 @@ export async function down(knex) {
 		t.timestamp('last_login_at').notNullable().defaultTo(knex.raw('CURRENT_TIMESTAMP'))
 	})
 
-	await knex.raw(getOnUpdateTriggerSql('users'))
+	await knex.raw(createOnUpdateTriggerSql('users'))
 }
