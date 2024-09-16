@@ -10,3 +10,6 @@ knexfile.js
 
 # temp scripts
 /temp-scripts
+
+# macOS
+.DS_Store
