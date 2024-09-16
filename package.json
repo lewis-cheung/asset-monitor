@@ -7,6 +7,7 @@
   "scripts": {
     "test": "npm-run-all test:*",
     "test:analytics": "mocha tests/analytics.js --exit",
+    "start": "node cli monitor",
     "pm2:start": "pm2 delete ecosystem.config.cjs && pm2 start ecosystem.config.cjs",
     "pm2:restart": "pm2 delete ecosystem.config.cjs && pm2 start ecosystem.config.cjs",
     "typings": "npm-run-all typings:*",
